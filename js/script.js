@@ -1,7 +1,8 @@
 const Game = (() => {
 
-    let playerOneName = 'Jack';
-    let playerTwoName = 'Shrek';
+    let playerOneName = 'Player 1';
+    let playerTwoName = 'Player 2';
+    let isGameActive = true;
 
     const GameBoard = {
         board: [
@@ -25,56 +26,109 @@ const Game = (() => {
     let activePlayer = GameBoard.player[0];
 
     function drawMark (row, column) {
-        if(activePlayer.number === 1){
-            GameBoard.board[row][column] = 'X';
-            checkWinner();
-            /* switchPlayer(); */
-        }
-        else {
-            GameBoard.board[row][column] = 'O';
-            checkWinner();
-            /* switchPlayer(); */
+        if(GameBoard.board[row][column] === '' && isGameActive){
+            if(activePlayer.number === 1){
+                GameBoard.board[row][column] = 'X';
+                render();
+                checkWinner();
+                switchPlayer();
+            }
+            else {
+                GameBoard.board[row][column] = 'O';
+                render();
+                checkWinner();
+                switchPlayer();
+            }
         }
     
         console.table(GameBoard.board);
     }
     
     function switchPlayer() {
-        console.log("Switching...")
-        if (activePlayer === GameBoard.player[0]) {
-            activePlayer = GameBoard.player[1];
-            console.log(activePlayer);
-        }
-        else if (activePlayer === GameBoard.player[1]) {
-            activePlayer = GameBoard.player[0];
-            console.log(activePlayer);
-        }
+        activePlayer = activePlayer === GameBoard.player[0] ? GameBoard.player[1] : GameBoard.player[0];
     }    
 
     function checkWinner() {
+        let player;
         //rows
         for (i=0; i <= 2; i++) {
-            if (GameBoard.board[i][0] === 'X' && GameBoard.board[i][1] === 'X' && GameBoard.board[i][2] === 'X') {
-                alert('Player X Wins! With a row')
+            if (GameBoard.board[i][0] === '') {continue}
+            if (GameBoard.board[i][0] === GameBoard.board[i][1] && GameBoard.board[i][1] === GameBoard.board[i][2]) {
+                player = GameBoard.board[i][0];
+                alert('Player ' + player + ' Wins!');
+                isGameActive = false;
             }
         }
         //columns
         for (i=0; i <= 2; i++) {
-            if (GameBoard.board[0][i] === 'X' && GameBoard.board[1][i] === 'X' && GameBoard.board[2][i] === 'X') {
-                alert('Player X Wins! With a column')
+            if (GameBoard.board[0][i] === '') {continue}
+            if (GameBoard.board[0][i] === GameBoard.board[1][i] && GameBoard.board[1][i] === GameBoard.board[2][i]) {
+                player = GameBoard.board[0][i];
+                alert('Player ' + player + ' Wins!');
+                isGameActive = false;
             }
         }
         //diagonals
+        if (GameBoard.board[1][1] != '') {
+            if (GameBoard.board[0][0] === GameBoard.board[1][1] && GameBoard.board[1][1] === GameBoard.board[2][2]) {
+                player = GameBoard.board[1][1];
+                alert('Player ' + player + ' Wins!');
+                isGameActive = false;
+            }
+            else if (GameBoard.board[0][2] === GameBoard.board[1][1] && GameBoard.board[1][1] === GameBoard.board[2][0]) {
+                player = GameBoard.board[1][1];
+                alert('Player ' + player + ' Wins!');
+                isGameActive = false;
+            }
+        }
 
-        if (GameBoard.board[0][0] === 'X' && GameBoard.board[1][1] === 'X' && GameBoard.board[2][2] === 'X') {
-            alert('Player X Wins! With FIRST diagonal')
-        }
-        else if (GameBoard.board[0][2] === 'X' && GameBoard.board[1][1] === 'X' && GameBoard.board[2][0] === 'X') {
-            alert('Player X Wins! With SECOND diagonal')
-        }
 
     }
 
+    function cacheDOM() {
+        fields = document.querySelectorAll('.field');
+        restartBtn = document.querySelector('.restart');
+        return {fields, restartBtn};
+    }
+
+    function render() {
+        fields[0].innerText = GameBoard.board[0][0];
+        fields[1].innerText = GameBoard.board[0][1];
+        fields[2].innerText = GameBoard.board[0][2];
+        fields[3].innerText = GameBoard.board[1][0];
+        fields[4].innerText = GameBoard.board[1][1];
+        fields[5].innerText = GameBoard.board[1][2];
+        fields[6].innerText = GameBoard.board[2][0];
+        fields[7].innerText = GameBoard.board[2][1];
+        fields[8].innerText = GameBoard.board[2][2];
+    }
+
+    function bindEvents() {
+        //squares
+        let row;
+        let column;
+        for (i = 0; i <= 8; i++) {
+            fields[i].addEventListener('click', function () {
+                row = this.dataset.row;
+                column = this.dataset.column;
+                drawMark(row, column);
+            })
+        }
+        //restart button
+        restartBtn.addEventListener('click', function () {
+            for (i = 0; i < 3; i++) {
+                for (j = 0; j < 3; j++) {
+                    GameBoard.board[i][j] = '';
+                }
+            }
+            isGameActive = true;
+            activePlayer = GameBoard.player[0];
+            render();
+        })
+    }
+
+    cacheDOM();
+    bindEvents();
     return {drawMark};
 })();
 
