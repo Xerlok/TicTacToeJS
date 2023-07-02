@@ -10,11 +10,13 @@ const Game = (() => {
         player: [
             {
                 name: 'Player 1',
-                number: 1
+                number: 1,
+                color: 'red'
             },
             {
                 name: "Player 2",
-                number: 2
+                number: 2,
+                color: 'blue'
             }
         ],
         initialize: function() {
@@ -22,6 +24,7 @@ const Game = (() => {
             
             this.cacheDOM();
             this.playerTurn.innerText = `${this.activePlayer.name} turn `;
+            this.playerTurn.style.color = this.activePlayer.color;
             this.bindEvents();
         },
         drawMark: function(row,column) {
@@ -42,7 +45,7 @@ const Game = (() => {
         },
         switchPlayer: function() {
             this.activePlayer = this.activePlayer === GameBoard.player[0] ? GameBoard.player[1] : GameBoard.player[0];
-            this.playerTurn.innerText = `${this.activePlayer.name} turn`;
+            this.render();
         },
         checkWinner: function() {
             let player;
@@ -108,6 +111,9 @@ const Game = (() => {
             this.fields[6].innerText = GameBoard.board[2][0];
             this.fields[7].innerText = GameBoard.board[2][1];
             this.fields[8].innerText = GameBoard.board[2][2];
+
+            this.playerTurn.innerText = `${this.activePlayer.name} turn`;
+            this.playerTurn.style.color = this.activePlayer.color;
         },
         bindEvents: function() {
             //squares
@@ -116,12 +122,7 @@ const Game = (() => {
             const self = this;
             for (let i = 0; i <= 8; i++) {
                 this.fields[i].addEventListener('click', function () {
-                    if (self.activePlayer.number === 1) {
-                        this.style.color = 'red';
-                    }
-                    else if (self.activePlayer.number != 1) {
-                        this.style.color = 'blue';
-                    }
+                    this.style.color = self.activePlayer.color;
                     row = this.dataset.row;
                     column = this.dataset.column;
                     self.drawMark(row, column);
