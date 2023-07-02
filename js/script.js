@@ -44,17 +44,17 @@ const Game = (() => {
             }
         },
         switchPlayer: function() {
-            this.activePlayer = this.activePlayer === GameBoard.player[0] ? GameBoard.player[1] : GameBoard.player[0];
-            this.render();
+            if (this.isGameActive) {
+                this.activePlayer = this.activePlayer === GameBoard.player[0] ? GameBoard.player[1] : GameBoard.player[0];
+                this.render();
+            }
         },
         checkWinner: function() {
-            let player;
             //check rows
             for (let i = 0; i <= 2; i++) {
                 if (GameBoard.board[i][0] === '') {continue};
                 if (GameBoard.board[i][0] === GameBoard.board[i][1] && GameBoard.board[i][1] === GameBoard.board[i][2]) {
-                    player = GameBoard.board[i][0];
-                    alert('Player ' + player + ' Wins!');
+                    this.playerTurn.innerText = `${this.activePlayer.name} wins!`;
                     this.isGameActive = false;
                 }
             }
@@ -62,21 +62,18 @@ const Game = (() => {
             for (let i = 0; i <= 2; i++) {
                 if (GameBoard.board[0][i] === '') {continue};
                 if (GameBoard.board[0][i] === GameBoard.board[1][i] && GameBoard.board[1][i] === GameBoard.board[2][i]) {
-                    player = GameBoard.board[0][i];
-                    alert('Player ' + player + ' Wins!');
+                    this.playerTurn.innerText = `${this.activePlayer.name} wins!`;
                     this.isGameActive = false;
                 }
             }
             //check diagonals
             if (GameBoard.board[1][1] != '') {
                 if (GameBoard.board[0][0] === GameBoard.board[1][1] && GameBoard.board[1][1] === GameBoard.board[2][2]) {
-                    player = GameBoard.board[1][1];
-                    alert('Player ' + player + ' Wins!');
+                    this.playerTurn.innerText = `${this.activePlayer.name} wins!`;
                     this.isGameActive = false;
                 }
                 else if (GameBoard.board[0][2] === GameBoard.board[1][1] && GameBoard.board[1][1] === GameBoard.board[2][0]) {
-                    player = GameBoard.board[1][1];
-                    alert('Player ' + player + ' Wins!');
+                    this.playerTurn.innerText = `${this.activePlayer.name} wins!`;
                     this.isGameActive = false;
                 }
             }
@@ -120,12 +117,15 @@ const Game = (() => {
             let row;
             let column;
             const self = this;
+
             for (let i = 0; i <= 8; i++) {
                 this.fields[i].addEventListener('click', function () {
-                    this.style.color = self.activePlayer.color;
-                    row = this.dataset.row;
-                    column = this.dataset.column;
-                    self.drawMark(row, column);
+                    if (this.innerText === '') {
+                        this.style.color = self.activePlayer.color;
+                        row = this.dataset.row;
+                        column = this.dataset.column;
+                        self.drawMark(row, column);
+                    }
                 });
             }
             //restart button
