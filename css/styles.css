@@ -5,6 +5,11 @@ body {
     padding: 0px;
 }
 
+@font-face {
+    font-family: pixel;
+    src: url(/fonts/joystix_monospace.otf);
+}
+
 .wrapper-main {
     display: flex;
     height: 100%;
@@ -14,12 +19,47 @@ body {
     gap: 2rem;
 }
 
+.header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+.playerTurn {
+    font-size: 2rem;
+    padding: 1rem;
+    border: 2px solid gray;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.377);
+}
+
+.wrapper-board {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
 .game-board {
     display: grid;
     grid-template-columns: repeat(3, 200px);
     justify-items: center;
     align-items: center;
+    font-family: pixel;
+    font-size: 8rem;
+    color: #f59e0b;
+    flex-grow: 3;
+}
 
+img {
+    height: 150px;
+    width: 150px;
 }
 
 .field {
@@ -29,15 +69,15 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 7rem;
 }
 
 .restart {
     height: 50px;
     width: 200px;
     font-size: 2rem;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.377);
 }
 
 footer {
-
+    flex-grow: 1;
 }
