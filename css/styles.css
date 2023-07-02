@@ -1,13 +1,13 @@
+@font-face {
+    font-family: pixel;
+    src: url(../fonts/joystix_monospace.otf);
+}
+
 html,
 body {
     height: 100%;
     margin: 0px;
     padding: 0px;
-}
-
-@font-face {
-    font-family: pixel;
-    src: url(/fonts/joystix_monospace.otf);
 }
 
 .wrapper-main {
@@ -54,6 +54,7 @@ h1 {
     font-family: pixel;
     font-size: 8rem;
     color: #f59e0b;
+    text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.822);
     flex-grow: 3;
 }
 
