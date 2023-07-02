@@ -83,7 +83,8 @@ const Game = (() => {
             for (let i = 0; i < 3; i++) {
                 areAllFieldsDrawn = GameBoard.board.flat().includes('');
                 if (!areAllFieldsDrawn && this.isGameActive) {
-                    alert('Draw!');
+                    this.playerTurn.innerText = 'Draw!';
+                    this.playerTurn.style.color = 'black';
                     this.isGameActive = false;
                     break;
                 }
