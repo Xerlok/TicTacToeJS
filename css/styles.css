@@ -8,6 +8,7 @@ body {
     height: 100%;
     margin: 0px;
     padding: 0px;
+    box-sizing: border-box;
 }
 
 .wrapper-main {
@@ -16,7 +17,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 2rem;
+    gap: 1rem;
 }
 
 .header {
@@ -27,11 +28,20 @@ body {
     flex-grow: 1;
 }
 
-h1 {
+h1 {    
     font-size: 3rem;
+    font-family: pixel;
+    text-align: center;
+    width: 1000px;
+    color: white;
+    text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.514);
+    background-color: #06b6d4;
+    padding: 0.5rem;
+    border: 3px solid red;
 }
 
 .playerTurn {
+    font-family: pixel;
     font-size: 2rem;
     padding: 1rem;
     border: 2px solid gray;
@@ -66,17 +76,56 @@ img {
 .field {
     height: 200px;
     width: 200px;
-    border: 1px solid #06b6d4;
+    border: 2px solid #06b6d4;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .restart {
+    align-items: center;
     height: 50px;
     width: 200px;
     font-size: 2rem;
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.377);
+    font-family: pixel;
+    background-color: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: .25rem;
+    color: rgba(0, 0, 0, 0.85);
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    line-height: 1.25;
+    margin: 0;
+    min-height: 3rem;
+    padding: calc(.875rem - 1px) calc(1.5rem - 1px);
+    text-decoration: none;
+    transition: all 250ms;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: baseline;
+    width: auto;
+}
+
+.restart:hover,
+.restart:focus {
+    border-color: rgba(0, 0, 0, 0.15);
+    box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+    /* color: rgba(0, 0, 0, 0.65); */
+}
+
+.restart:hover {
+    transform: translateY(-1px);
+}
+
+.restart:active {
+    background-color: #F0F0F1;
+    border-color: rgba(0, 0, 0, 0.15);
+    box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+    color: rgba(0, 0, 0, 0.65);
+    transform: translateY(0);
 }
 
 footer {
