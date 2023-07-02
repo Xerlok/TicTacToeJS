@@ -1,0 +1,43 @@
+html,
+body {
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+.wrapper-main {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.game-board {
+    display: grid;
+    grid-template-columns: repeat(3, 200px);
+    justify-items: center;
+    align-items: center;
+
+}
+
+.field {
+    height: 200px;
+    width: 200px;
+    border: 1px solid #06b6d4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 7rem;
+}
+
+.restart {
+    height: 50px;
+    width: 200px;
+    font-size: 2rem;
+}
+
+footer {
+
+}

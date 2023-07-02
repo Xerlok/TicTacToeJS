@@ -40,8 +40,6 @@ const Game = (() => {
                 switchPlayer();
             }
         }
-    
-        console.table(GameBoard.board);
     }
     
     function switchPlayer() {
@@ -81,8 +79,17 @@ const Game = (() => {
                 isGameActive = false;
             }
         }
+        //draw?
+        let areAllFieldsDrawn;
 
-
+        for (i = 0; i < 3; i++) {
+            areAllFieldsDrawn = GameBoard.board.flat().includes('');
+            if (!areAllFieldsDrawn) {
+                alert('Draw!');
+                isGameActive = false;
+                break;
+            }
+        }
     }
 
     function cacheDOM() {
@@ -129,7 +136,6 @@ const Game = (() => {
 
     cacheDOM();
     bindEvents();
-    return {drawMark};
 })();
 
 
