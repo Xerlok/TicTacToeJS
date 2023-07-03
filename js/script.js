@@ -93,6 +93,7 @@ const Game = (() => {
             const toMenu = document.querySelector('.toMenu');
             const playerTurn = document.querySelector('.playerTurn');
             const sglPLayerBtn = document.querySelector('.sglPlayer');
+            const multiplayer = document.querySelector('.multiplayer');
             const wrapperBoard = document.querySelector('.wrapper-board');
             const menu = document.querySelector('.menu');
 
@@ -101,6 +102,7 @@ const Game = (() => {
             this.toMenu = toMenu;
             this.playerTurn = playerTurn;
             this.sglPLayerBtn = sglPLayerBtn;
+            this.multiplayer = multiplayer;
             this.wrapperBoard = wrapperBoard;
             this.menu = menu;
         },
@@ -148,8 +150,8 @@ const Game = (() => {
             }
             //restart button
             this.restartBtn.addEventListener('click', restart);
-            //single player
-            this.sglPLayerBtn.addEventListener('click', function () {
+            //multiplayer button
+            this.multiplayer.addEventListener('click', function () {
                 self.menu.style.display = 'none';
                 self.wrapperBoard.style.display = 'flex';
                 self.playerTurn.style.display = 'flex';
