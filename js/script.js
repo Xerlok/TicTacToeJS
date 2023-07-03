@@ -2,23 +2,17 @@
 const Game = (() => {
     const GameBoard = {
         isGameActive: true,
+
         board: [
             ['','',''],
             ['','',''],
             ['','','']
         ],
-        player: [
-            {
-                name: 'Player 1',
-                number: 1,
-                color: 'red'
-            },
-            {
-                name: "Player 2",
-                number: 2,
-                color: 'blue'
-            }
+
+        player: [{name: 'Player 1', number: 1, color: 'red'},
+            {name: "Player 2", number: 2, color: 'blue'}
         ],
+
         initialize: function() {
             this.activePlayer = this.player[0];
             
@@ -27,6 +21,7 @@ const Game = (() => {
             this.playerTurn.style.color = this.activePlayer.color;
             this.bindEvents();
         },
+
         drawMark: function(row,column) {
             if(GameBoard.board[row][column] === '' && this.isGameActive){
                 if(this.activePlayer.number === 1){
@@ -43,12 +38,14 @@ const Game = (() => {
                 }
             }
         },
+
         switchPlayer: function() {
             if (this.isGameActive) {
                 this.activePlayer = this.activePlayer === GameBoard.player[0] ? GameBoard.player[1] : GameBoard.player[0];
                 this.render();
             }
         },
+
         checkWinner: function() {
             //check rows
             for (let i = 0; i <= 2; i++) {
@@ -79,7 +76,6 @@ const Game = (() => {
             }
             //draw?
             let areAllFieldsDrawn;
-    
             for (let i = 0; i < 3; i++) {
                 areAllFieldsDrawn = GameBoard.board.flat().includes('');
                 if (!areAllFieldsDrawn && this.isGameActive) {
@@ -90,15 +86,25 @@ const Game = (() => {
                 }
             }
         },
+
         cacheDOM: function() {
             const fields = document.querySelectorAll('.field');
             const restartBtn = document.querySelector('.restart');
+            const toMenu = document.querySelector('.toMenu');
             const playerTurn = document.querySelector('.playerTurn');
+            const sglPLayerBtn = document.querySelector('.sglPlayer');
+            const wrapperBoard = document.querySelector('.wrapper-board');
+            const menu = document.querySelector('.menu');
 
             this.fields = fields;
             this.restartBtn = restartBtn;
+            this.toMenu = toMenu;
             this.playerTurn = playerTurn;
+            this.sglPLayerBtn = sglPLayerBtn;
+            this.wrapperBoard = wrapperBoard;
+            this.menu = menu;
         },
+
         render: function() {
             this.fields[0].innerText = GameBoard.board[0][0];
             this.fields[1].innerText = GameBoard.board[0][1];
@@ -113,12 +119,23 @@ const Game = (() => {
             this.playerTurn.innerText = `${this.activePlayer.name} turn`;
             this.playerTurn.style.color = this.activePlayer.color;
         },
+
         bindEvents: function() {
+            const self = this;
+
+            function restart() {
+                for (let i = 0; i < 3; i++) {
+                    for (let j = 0; j < 3; j++) {
+                        GameBoard.board[i][j] = '';
+                    }
+                }
+                self.isGameActive = true;
+                self.activePlayer = GameBoard.player[0];
+                self.render();
+            }
             //squares
             let row;
             let column;
-            const self = this;
-
             for (let i = 0; i <= 8; i++) {
                 this.fields[i].addEventListener('click', function () {
                     if (this.innerText === '') {
@@ -130,16 +147,21 @@ const Game = (() => {
                 });
             }
             //restart button
-            this.restartBtn.addEventListener('click', function () {
-                for (let i = 0; i < 3; i++) {
-                    for (let j = 0; j < 3; j++) {
-                        GameBoard.board[i][j] = '';
-                    }
-                }
-                self.isGameActive = true;
-                self.activePlayer = GameBoard.player[0];
-                self.render();
-            });
+            this.restartBtn.addEventListener('click', restart);
+            //single player
+            this.sglPLayerBtn.addEventListener('click', function () {
+                self.menu.style.display = 'none';
+                self.wrapperBoard.style.display = 'flex';
+                self.playerTurn.style.display = 'flex';
+            })
+            //back to menu
+            this.toMenu.addEventListener('click', function () {
+                self.menu.style.display = 'flex';
+                self.wrapperBoard.style.display = 'none';
+                self.playerTurn.style.display = 'none';
+
+                restart();
+            })
         }
     };
     GameBoard.initialize();

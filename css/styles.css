@@ -12,8 +12,8 @@ body {
 }
 
 .wrapper-main {
-    display: flex;
     height: 100%;
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -41,15 +41,16 @@ h1 {
 }
 
 .playerTurn {
+    display: none;
     font-family: pixel;
     font-size: 2rem;
     padding: 1rem;
-    border: 2px solid gray;
+    border: 2px solid rgba(0, 0, 0, 0.85);
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.377);
 }
 
 .wrapper-board {
-    display: flex;
+    display: none;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -64,7 +65,7 @@ h1 {
     font-family: pixel;
     font-size: 8rem;
     color: #f59e0b;
-    text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.822);
+    text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.925);
     flex-grow: 3;
 }
 
@@ -82,7 +83,7 @@ img {
     align-items: center;
 }
 
-.restart {
+.menuBtn {
     align-items: center;
     height: 50px;
     width: 200px;
@@ -109,18 +110,18 @@ img {
     width: auto;
 }
 
-.restart:hover,
-.restart:focus {
+.menuBtn:hover,
+.menuBtn:focus {
     border-color: rgba(0, 0, 0, 0.15);
     box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
     /* color: rgba(0, 0, 0, 0.65); */
 }
 
-.restart:hover {
+.menuBtn:hover {
     transform: translateY(-1px);
 }
 
-.restart:active {
+.menuBtn:active {
     background-color: #F0F0F1;
     border-color: rgba(0, 0, 0, 0.15);
     box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
@@ -128,6 +129,24 @@ img {
     transform: translateY(0);
 }
 
-footer {
+.subMenu {
+    display: flex;
+    gap: 2rem;
+}
+
+.menu {
+    flex-grow: 4;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.footer {
     flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    padding: 1rem;
 }
