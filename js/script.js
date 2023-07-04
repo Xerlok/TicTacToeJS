@@ -52,8 +52,9 @@ const Game = (() => {
                 if (GameBoard.board[i][0] === '') {continue};
                 if (GameBoard.board[i][0] === GameBoard.board[i][1] && GameBoard.board[i][1] === GameBoard.board[i][2]) {
                     this.playerTurn.innerText = `${this.activePlayer.name} wins!`;
-                    this.activePlayer.score =+ 1;
+                    this.activePlayer.score += 1;
                     this.isGameActive = false;
+                    this.nextRound.style.display = 'block';
                 }
             }
             //check columns
@@ -61,21 +62,24 @@ const Game = (() => {
                 if (GameBoard.board[0][i] === '') {continue};
                 if (GameBoard.board[0][i] === GameBoard.board[1][i] && GameBoard.board[1][i] === GameBoard.board[2][i]) {
                     this.playerTurn.innerText = `${this.activePlayer.name} wins!`;
-                    this.activePlayer.score =+ 1;
+                    this.activePlayer.score += 1;
                     this.isGameActive = false;
+                    this.nextRound.style.display = 'block';
                 }
             }
             //check diagonals
             if (GameBoard.board[1][1] != '') {
                 if (GameBoard.board[0][0] === GameBoard.board[1][1] && GameBoard.board[1][1] === GameBoard.board[2][2]) {
                     this.playerTurn.innerText = `${this.activePlayer.name} wins!`;
-                    this.activePlayer.score =+ 1;
+                    this.activePlayer.score += 1;
                     this.isGameActive = false;
+                    this.nextRound.style.display = 'block';
                 }
                 else if (GameBoard.board[0][2] === GameBoard.board[1][1] && GameBoard.board[1][1] === GameBoard.board[2][0]) {
                     this.playerTurn.innerText = `${this.activePlayer.name} wins!`;
-                    this.activePlayer.score =+ 1;
+                    this.activePlayer.score += 1;
                     this.isGameActive = false;
+                    this.nextRound.style.display = 'block';
                 }
             }
             //draw?
@@ -86,10 +90,12 @@ const Game = (() => {
                     this.playerTurn.innerText = 'Draw!';
                     this.playerTurn.style.color = 'black';
                     this.isGameActive = false;
+                    this.nextRound.style.display = 'block';
                     break;
                 }
             }
-            this.render();
+            this.xScore.innerText = `X:${this.player[0].score}`;
+            this.oScore.innerText = `O:${this.player[1].score}`;
         },
 
         cacheDOM: function() {
@@ -104,6 +110,7 @@ const Game = (() => {
             const multiplayer = document.querySelector('.multiplayer');
             const wrapperBoard = document.querySelector('.wrapper-board');
             const menu = document.querySelector('.menu');
+            const nextRound = document.querySelector('.nextRound');
 
             this.fields = fields;
             this.restartBtn = restartBtn;
@@ -116,6 +123,7 @@ const Game = (() => {
             this.multiplayer = multiplayer;
             this.wrapperBoard = wrapperBoard;
             this.menu = menu;
+            this.nextRound = nextRound;
         },
 
         render: function() {
@@ -135,22 +143,38 @@ const Game = (() => {
             this.oScore.innerText = `O:${this.player[1].score}`;
         },
 
-        bindEvents: function() {
-            const self = this;
+        nextRoundFnctn: function () {
+            for (let i = 0; i < 3; i++) {
+                for (let j = 0; j < 3; j++) {
+                    GameBoard.board[i][j] = '';
+                }
+            }
+            GameBoard.nextRound.style.display = 'none';
+            GameBoard.isGameActive = true;
+            GameBoard.activePlayer = GameBoard.player[0];
+            GameBoard.render();
+        }, 
 
-            function restart() {
+        bindEvents: function() {
+            //squares
+            let row;
+            let column;
+            let self = this;
+
+            function restart () {
                 for (let i = 0; i < 3; i++) {
                     for (let j = 0; j < 3; j++) {
                         GameBoard.board[i][j] = '';
                     }
                 }
                 self.isGameActive = true;
+                self.nextRound.style.display = 'none';
                 self.activePlayer = GameBoard.player[0];
+                self.player[0].score = 0;
+                self.player[1].score = 0;
                 self.render();
             }
-            //squares
-            let row;
-            let column;
+
             for (let i = 0; i <= 8; i++) {
                 this.fields[i].addEventListener('click', function () {
                     if (this.innerText === '') {
@@ -158,8 +182,6 @@ const Game = (() => {
                         row = this.dataset.row;
                         column = this.dataset.column;
                         self.drawMark(row, column);
-                        self.player[0].score = 0;
-                        self.player[1].score = 0;
                     }
                 });
             }
@@ -179,7 +201,11 @@ const Game = (() => {
                 self.topPanel.style.display = 'none';
                 restart();
             })
-        }
+            //next round
+            this.nextRound.addEventListener('click', function () {
+                GameBoard.nextRoundFnctn();
+            })
+        },
     };
     GameBoard.initialize();
 })();

@@ -164,3 +164,26 @@ img {
     align-items: end;
     padding: 1rem;
 }
+
+@keyframes next {
+    from {opacity: 0.3;}
+    to {opacity: 0.9;}
+}
+
+.nextRound {
+    display: none;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    padding: 0.5rem;
+    font-family: pixel;
+    font-size: 4rem;
+    color: white;
+    background-color: #06b6d4;
+    border: 2px solid red;
+    opacity: 0.3;
+    animation-name: next;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
