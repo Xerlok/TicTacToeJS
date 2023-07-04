@@ -9,8 +9,8 @@ const Game = (() => {
             ['','','']
         ],
 
-        player: [{name: 'Player 1', number: 1, color: 'red'},
-            {name: "Player 2", number: 2, color: 'blue'}
+        player: [{name: 'Player 1', number: 1, color: 'red', score: 0},
+            {name: "Player 2", number: 2, color: 'blue', score: 0}
         ],
 
         initialize: function() {
@@ -52,6 +52,7 @@ const Game = (() => {
                 if (GameBoard.board[i][0] === '') {continue};
                 if (GameBoard.board[i][0] === GameBoard.board[i][1] && GameBoard.board[i][1] === GameBoard.board[i][2]) {
                     this.playerTurn.innerText = `${this.activePlayer.name} wins!`;
+                    this.activePlayer.score =+ 1;
                     this.isGameActive = false;
                 }
             }
@@ -60,6 +61,7 @@ const Game = (() => {
                 if (GameBoard.board[0][i] === '') {continue};
                 if (GameBoard.board[0][i] === GameBoard.board[1][i] && GameBoard.board[1][i] === GameBoard.board[2][i]) {
                     this.playerTurn.innerText = `${this.activePlayer.name} wins!`;
+                    this.activePlayer.score =+ 1;
                     this.isGameActive = false;
                 }
             }
@@ -67,10 +69,12 @@ const Game = (() => {
             if (GameBoard.board[1][1] != '') {
                 if (GameBoard.board[0][0] === GameBoard.board[1][1] && GameBoard.board[1][1] === GameBoard.board[2][2]) {
                     this.playerTurn.innerText = `${this.activePlayer.name} wins!`;
+                    this.activePlayer.score =+ 1;
                     this.isGameActive = false;
                 }
                 else if (GameBoard.board[0][2] === GameBoard.board[1][1] && GameBoard.board[1][1] === GameBoard.board[2][0]) {
                     this.playerTurn.innerText = `${this.activePlayer.name} wins!`;
+                    this.activePlayer.score =+ 1;
                     this.isGameActive = false;
                 }
             }
@@ -85,13 +89,17 @@ const Game = (() => {
                     break;
                 }
             }
+            this.render();
         },
 
         cacheDOM: function() {
             const fields = document.querySelectorAll('.field');
             const restartBtn = document.querySelector('.restart');
             const toMenu = document.querySelector('.toMenu');
+            const topPanel = document.querySelector('.top-panel');
             const playerTurn = document.querySelector('.playerTurn');
+            const xScore = document.querySelector('#x');
+            const oScore = document.querySelector('#o');
             const sglPLayerBtn = document.querySelector('.sglPlayer');
             const multiplayer = document.querySelector('.multiplayer');
             const wrapperBoard = document.querySelector('.wrapper-board');
@@ -100,7 +108,10 @@ const Game = (() => {
             this.fields = fields;
             this.restartBtn = restartBtn;
             this.toMenu = toMenu;
+            this.topPanel = topPanel;
             this.playerTurn = playerTurn;
+            this.xScore = xScore;
+            this.oScore = oScore;
             this.sglPLayerBtn = sglPLayerBtn;
             this.multiplayer = multiplayer;
             this.wrapperBoard = wrapperBoard;
@@ -120,6 +131,8 @@ const Game = (() => {
 
             this.playerTurn.innerText = `${this.activePlayer.name} turn`;
             this.playerTurn.style.color = this.activePlayer.color;
+            this.xScore.innerText = `X:${this.player[0].score}`;
+            this.oScore.innerText = `O:${this.player[1].score}`;
         },
 
         bindEvents: function() {
@@ -145,6 +158,8 @@ const Game = (() => {
                         row = this.dataset.row;
                         column = this.dataset.column;
                         self.drawMark(row, column);
+                        self.player[0].score = 0;
+                        self.player[1].score = 0;
                     }
                 });
             }
@@ -154,14 +169,14 @@ const Game = (() => {
             this.multiplayer.addEventListener('click', function () {
                 self.menu.style.display = 'none';
                 self.wrapperBoard.style.display = 'flex';
-                self.playerTurn.style.display = 'flex';
+                self.topPanel.style.display = 'flex';
+                self.render();
             })
             //back to menu
             this.toMenu.addEventListener('click', function () {
                 self.menu.style.display = 'flex';
                 self.wrapperBoard.style.display = 'none';
-                self.playerTurn.style.display = 'none';
-
+                self.topPanel.style.display = 'none';
                 restart();
             })
         }

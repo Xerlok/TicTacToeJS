@@ -40,13 +40,27 @@ h1 {
     border: 3px solid red;
 }
 
-.playerTurn {
+.top-panel {
     display: none;
     font-family: pixel;
     font-size: 2rem;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.playerTurn {
     padding: 1rem;
     border: 2px solid rgba(0, 0, 0, 0.85);
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.377);
+}
+
+#x {
+    color: red;
+}
+
+#o {
+    color: blue;
 }
 
 .wrapper-board {
