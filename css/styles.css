@@ -78,7 +78,7 @@ h1 {
     align-items: center;
     font-family: pixel;
     font-size: 8rem;
-    color: #f59e0b;
+    color: pink;
     text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.925);
     flex-grow: 3;
 }
@@ -184,7 +184,7 @@ img {
     border-style: none;
     opacity: 0.3;
     animation-name: next;
-    animation-duration: 1.5s;
+    animation-duration: 1s;
     animation-iteration-count: infinite;
     animation-direction: alternate;
 }

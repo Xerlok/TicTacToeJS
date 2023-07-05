@@ -26,25 +26,30 @@ const Game = (() => {
             if(GameBoard.board[row][column] === '' && this.isGameActive){
                 if(this.activePlayer.number === 1){
                     GameBoard.board[row][column] = 'X';
-                    /* GameBoard.gigaChadAItron3000(); */
                     this.render();
                     this.checkWinner();
                     this.switchPlayer();
+
+                    if (this.activePlayer.number === 3000) {
+                        GameBoard.gigaChadAItron3000();
+                        this.render();
+                        this.checkWinner();
+                        this.switchPlayer();
+                    }
                 }
-                else {
+                else if(this.activePlayer.number === 2) {
                     GameBoard.board[row][column] = 'O';
-                    /* GameBoard.gigaChadAItron3000(); */
                     this.render();
                     this.checkWinner();
                     this.switchPlayer();
                 }
+                
             }
         },
 
         gigaChadAItron3000: function() {
             loop1:
             for (let i = 0; i < 3; i++) {
-                loop2:
                 for (let j = 0; j < 3; j++) {
                     if(GameBoard.board[i][j] === '') {
                         GameBoard.board[i][j] = 'O';
@@ -52,7 +57,6 @@ const Game = (() => {
                     }
                 }
             }
-            console.table(GameBoard.board);
         },
 
         switchPlayer: function() {
@@ -148,6 +152,15 @@ const Game = (() => {
             this.fields[7].innerText = GameBoard.board[2][1];
             this.fields[8].innerText = GameBoard.board[2][2];
 
+            for (let i = 0; i < this.fields.length; i++) {
+                if (this.fields[i].innerText === 'X') {
+                    this.fields[i].style.color = GameBoard.player[0].color;
+                }
+                else if (this.fields[i].innerText === 'O') {
+                    this.fields[i].style.color = GameBoard.player[1].color;
+                }
+            }
+
             this.playerTurn.innerText = `${this.activePlayer.name} turn`;
             this.playerTurn.style.color = this.activePlayer.color;
             this.xScore.innerText = `X:${this.player[0].score}`;
@@ -189,7 +202,6 @@ const Game = (() => {
             for (let i = 0; i <= 8; i++) {
                 this.fields[i].addEventListener('click', function () {
                     if (this.innerText === '') {
-                        this.style.color = self.activePlayer.color;
                         row = this.dataset.row;
                         column = this.dataset.column;
                         self.drawMark(row, column);
@@ -198,24 +210,33 @@ const Game = (() => {
             }
             //restart button
             this.restartBtn.addEventListener('click', restart);
+            //single player button
+            this.sglPLayerBtn.addEventListener("click", function() {
+                GameBoard.player[1].name = 'AItron 3000';
+                GameBoard.player[1].number = 3000;
+                self.menu.style.display = 'none';
+                self.wrapperBoard.style.display = 'flex';
+                self.topPanel.style.display = 'flex';
+                self.render();
+            })
             //multiplayer button
-            this.multiplayer.addEventListener('click', function () {
+            this.multiplayer.addEventListener('click', function() {
                 self.menu.style.display = 'none';
                 self.wrapperBoard.style.display = 'flex';
                 self.topPanel.style.display = 'flex';
                 self.render();
             })
             //back to menu
-            this.toMenu.addEventListener('click', function () {
+            this.toMenu.addEventListener('click', function() {
                 self.menu.style.display = 'flex';
                 self.wrapperBoard.style.display = 'none';
                 self.topPanel.style.display = 'none';
+                GameBoard.player[1].name = 'Player 2';
+                GameBoard.player[1].number = 2;
                 restart();
             })
             //next round
-            this.nextRound.addEventListener('click', function () {
-                GameBoard.nextRoundFnctn();
-            })
+            this.nextRound.addEventListener('click', GameBoard.nextRoundFnctn);
         },
     };
     GameBoard.initialize();
