@@ -215,4 +215,9 @@ h1 {
         height: 50px;
         font-size: 1.5rem;
     }
+
+    .nextRound {
+        font-size: 3rem;
+        top: 45%;
+    }
   }
