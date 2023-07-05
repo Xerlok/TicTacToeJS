@@ -15,11 +15,35 @@ const Game = (() => {
 
         initialize: function() {
             this.activePlayer = this.player[0];
-            
+
             this.cacheDOM();
             this.playerTurn.innerText = `${this.activePlayer.name} turn `;
             this.playerTurn.style.color = this.activePlayer.color;
+            this.audioHandler();
             this.bindEvents();
+        },
+
+        audioHandler: function() {
+            const audioContext = new AudioContext();
+            const click = document.querySelector('#click');
+            const track = audioContext.createMediaElementSource(click);
+            track.connect(audioContext.destination);
+            const gainNode = audioContext.createGain();
+            gainNode.gain.value = 2;
+            track.connect(gainNode).connect(audioContext.destination);
+
+            const plop = document.querySelector('#plop');
+            const track2 = audioContext.createMediaElementSource(plop);
+            track2.connect(audioContext.destination);
+
+            this.click = click;
+            this.plop = plop;
+
+/*             const roundOver = document.querySelector('#round-over');
+            const track2 = audioContext2.createMediaStreamSource(roundOver);
+            track2.connect(audioContext2.destination);
+
+            this.roundOver = roundOver; */
         },
 
         drawMark: function(row,column) {
@@ -212,6 +236,7 @@ const Game = (() => {
             for (let i = 0; i <= 8; i++) {
                 this.fields[i].addEventListener('click', function () {
                     if (this.innerText === '') {
+                        self.plop.play();
                         row = this.dataset.row;
                         column = this.dataset.column;
                         self.drawMark(row, column);
@@ -219,9 +244,13 @@ const Game = (() => {
                 });
             }
             //restart button
-            this.restartBtn.addEventListener('click', restart);
+            this.restartBtn.addEventListener('click', function() {
+                restart();
+                self.click.play();
+            });
             //single player button
             this.sglPLayerBtn.addEventListener("click", function() {
+                self.click.play();
                 GameBoard.player[1].name = 'AItron 3000';
                 GameBoard.player[1].number = 3000;
                 self.menu.style.display = 'none';
@@ -231,6 +260,7 @@ const Game = (() => {
             })
             //multiplayer button
             this.multiplayer.addEventListener('click', function() {
+                self.click.play();
                 self.menu.style.display = 'none';
                 self.wrapperBoard.style.display = 'flex';
                 self.topPanel.style.display = 'flex';
@@ -238,6 +268,7 @@ const Game = (() => {
             })
             //back to menu
             this.toMenu.addEventListener('click', function() {
+                self.click.play();
                 self.menu.style.display = 'flex';
                 self.wrapperBoard.style.display = 'none';
                 self.topPanel.style.display = 'none';
