@@ -38,12 +38,12 @@ const Game = (() => {
 
             this.click = click;
             this.plop = plop;
+        },
 
-/*             const roundOver = document.querySelector('#round-over');
-            const track2 = audioContext2.createMediaStreamSource(roundOver);
-            track2.connect(audioContext2.destination);
-
-            this.roundOver = roundOver; */
+        playSound: function() {
+            if (this.isGameActive){
+                GameBoard.plop.play();
+            }
         },
 
         drawMark: function(row,column) {
@@ -236,7 +236,7 @@ const Game = (() => {
             for (let i = 0; i <= 8; i++) {
                 this.fields[i].addEventListener('click', function () {
                     if (this.innerText === '') {
-                        self.plop.play();
+                        self.playSound();
                         row = this.dataset.row;
                         column = this.dataset.column;
                         self.drawMark(row, column);
