@@ -26,17 +26,33 @@ const Game = (() => {
             if(GameBoard.board[row][column] === '' && this.isGameActive){
                 if(this.activePlayer.number === 1){
                     GameBoard.board[row][column] = 'X';
+                    /* GameBoard.gigaChadAItron3000(); */
                     this.render();
                     this.checkWinner();
                     this.switchPlayer();
                 }
                 else {
                     GameBoard.board[row][column] = 'O';
+                    /* GameBoard.gigaChadAItron3000(); */
                     this.render();
                     this.checkWinner();
                     this.switchPlayer();
                 }
             }
+        },
+
+        gigaChadAItron3000: function() {
+            loop1:
+            for (let i = 0; i < 3; i++) {
+                loop2:
+                for (let j = 0; j < 3; j++) {
+                    if(GameBoard.board[i][j] === '') {
+                        GameBoard.board[i][j] = 'O';
+                        break loop1;
+                    }
+                }
+            }
+            console.table(GameBoard.board);
         },
 
         switchPlayer: function() {
@@ -46,40 +62,35 @@ const Game = (() => {
             }
         },
 
+        announceWinner: function() {
+            this.playerTurn.innerText = `${this.activePlayer.name} wins!`;
+            this.activePlayer.score += 1;
+            this.isGameActive = false;
+            this.nextRound.style.display = 'block';
+        },
+
         checkWinner: function() {
             //check rows
             for (let i = 0; i <= 2; i++) {
                 if (GameBoard.board[i][0] === '') {continue};
                 if (GameBoard.board[i][0] === GameBoard.board[i][1] && GameBoard.board[i][1] === GameBoard.board[i][2]) {
-                    this.playerTurn.innerText = `${this.activePlayer.name} wins!`;
-                    this.activePlayer.score += 1;
-                    this.isGameActive = false;
-                    this.nextRound.style.display = 'block';
+                    GameBoard.announceWinner();
                 }
             }
             //check columns
             for (let i = 0; i <= 2; i++) {
                 if (GameBoard.board[0][i] === '') {continue};
                 if (GameBoard.board[0][i] === GameBoard.board[1][i] && GameBoard.board[1][i] === GameBoard.board[2][i]) {
-                    this.playerTurn.innerText = `${this.activePlayer.name} wins!`;
-                    this.activePlayer.score += 1;
-                    this.isGameActive = false;
-                    this.nextRound.style.display = 'block';
+                    GameBoard.announceWinner();
                 }
             }
             //check diagonals
             if (GameBoard.board[1][1] != '') {
                 if (GameBoard.board[0][0] === GameBoard.board[1][1] && GameBoard.board[1][1] === GameBoard.board[2][2]) {
-                    this.playerTurn.innerText = `${this.activePlayer.name} wins!`;
-                    this.activePlayer.score += 1;
-                    this.isGameActive = false;
-                    this.nextRound.style.display = 'block';
+                    GameBoard.announceWinner();
                 }
                 else if (GameBoard.board[0][2] === GameBoard.board[1][1] && GameBoard.board[1][1] === GameBoard.board[2][0]) {
-                    this.playerTurn.innerText = `${this.activePlayer.name} wins!`;
-                    this.activePlayer.score += 1;
-                    this.isGameActive = false;
-                    this.nextRound.style.display = 'block';
+                    GameBoard.announceWinner();
                 }
             }
             //draw?
