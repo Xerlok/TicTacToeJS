@@ -186,8 +186,8 @@ h1 {
 
 @media only screen and (max-width: 600px) {
     h1 {
-        width: 400px;
-        height: 120px;
+        width: 300px;
+        font-size: 2rem;
     }
 
     .menuBtn {
