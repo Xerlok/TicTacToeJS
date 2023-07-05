@@ -29,7 +29,7 @@ const Game = (() => {
             const track = audioContext.createMediaElementSource(click);
             track.connect(audioContext.destination);
             const gainNode = audioContext.createGain();
-            gainNode.gain.value = 2;
+            gainNode.gain.value = 1;
             track.connect(gainNode).connect(audioContext.destination);
 
             const plop = document.querySelector('#plop');
