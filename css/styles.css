@@ -196,22 +196,22 @@ h1 {
     }
 
     .top-panel {
-        font-size: 1.3rem;
+        font-size: 1rem;
         gap: 1rem;
     }
 
     .field {
-        height: 130px;
-        width: 130px;
+        height: 100px;
+        width: 100px;
     }
 
     .game-board {
-        grid-template-columns: repeat(3, 130px);
-        font-size: 7rem;
+        grid-template-columns: repeat(3, 100px);
+        font-size: 5rem;
     }
 
     .subMenu button {
-        width: 180px;
+        width: 150px;
         height: 50px;
         font-size: 1.5rem;
     }
