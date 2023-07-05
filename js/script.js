@@ -48,15 +48,25 @@ const Game = (() => {
         },
 
         gigaChadAItron3000: function() {
-            loop1:
+            let emptyFields = [];
+
+            function getRandomInt(max) {
+                return Math.floor(Math.random() * max);
+              }
+
             for (let i = 0; i < 3; i++) {
                 for (let j = 0; j < 3; j++) {
                     if(GameBoard.board[i][j] === '') {
-                        GameBoard.board[i][j] = 'O';
-                        break loop1;
+                        emptyFields.push([i,j]);
                     }
                 }
             }
+
+            let rndEmptField = emptyFields[getRandomInt(emptyFields.length)];
+            let index1 = rndEmptField[0];
+            let index2 = rndEmptField[1];
+
+            GameBoard.board[index1][index2] = 'O';
         },
 
         switchPlayer: function() {
